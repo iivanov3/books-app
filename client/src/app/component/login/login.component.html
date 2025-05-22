@@ -1,0 +1,39 @@
+<div class="parent">
+    <div class="container">
+        <form [formGroup]="userForm">
+            <h1>Login</h1>
+            <div class="input-box">
+                
+                <div class="text-danger">
+                    {{message}}
+                </div>
+
+                <input type="text" formControlName="username" placeholder="username">
+
+                <div class="text-danger">
+                    @if (userForm.controls['username'].touched &&
+                    userForm.controls['username'].errors?.['required']) {
+                    <span>Username is required</span>
+                    }
+                </div>
+
+                <div class="input-box">
+                    <input type="password" formControlName="password" placeholder="password">
+
+                    <div class="text-danger">
+                        @if (userForm.controls['password'].touched &&
+                        userForm.controls['password'].errors?.['required']) {
+                        <span>Password is required</span>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" (click)="login()">Login</button>
+            <div class="register">
+                <p>Don't have an account? <br> <a routerLink="/register">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>

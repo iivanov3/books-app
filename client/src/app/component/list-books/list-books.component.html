@@ -1,0 +1,41 @@
+<div class="container">
+    <h1>Books</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Date published</th>
+                <th>Actions</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (book of books; track $index) {
+            <tr>
+                <td>{{book.name}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.datePublished | date}}</td>
+                @if (username != null) {
+                    @if (favoriteBooks.get(book.id) == true) {
+                        <td><button (click)="removeFromFavorites(book.id)" class="btn btn-danger">Remove from favorites</button></td>
+                    }
+                    @else if (favoriteBooks.get(book.id) == false) {
+                        <td><button (click)="addToFavorites(book.id)" class="btn btn-primary">Add to favorites</button></td>
+                    }
+                }
+
+                @if (role == "ADMIN") {
+                    <td><button (click)="editBook(book.id)" class="btn btn-primary">Edit</button></td>
+                    <td><button (click)="deleteBook(book.id)" class="btn btn-danger">Delete</button></td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <button (click)="addBook()" class="btn btn-success">Add</button>
+</div>
