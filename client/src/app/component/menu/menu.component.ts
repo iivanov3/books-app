@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IntegrationService } from '../../service/integration.service';
 import { LocalStorageService } from '../../service/local-storage.service';
@@ -9,16 +9,10 @@ import { LocalStorageService } from '../../service/local-storage.service';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent implements OnInit {
-
-  constructor(
-    private storage: LocalStorageService
-  ) { }
+export class MenuComponent {
 
   integration = inject(IntegrationService);
 
-  ngOnInit(): void {
-    this.integration.userIsLoggedIn.subscribe(() => this.storage.get('auth-key') != ""); // doesnt work after refreshing
-  }
-  
+  constructor() { }
+
 }

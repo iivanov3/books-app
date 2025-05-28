@@ -19,16 +19,15 @@
                 <td>{{book.name}}</td>
                 <td>{{book.author}}</td>
                 <td>{{book.datePublished | date}}</td>
-                @if (username != null) {
-                    @if (favoriteBooks.get(book.id) == true) {
+                @if (integration.user != null) {
+                    @if (favorites.get(book.id) == true) {
                         <td><button (click)="removeFromFavorites(book.id)" class="btn btn-danger">Remove from favorites</button></td>
                     }
-                    @else if (favoriteBooks.get(book.id) == false) {
+                    @else {
                         <td><button (click)="addToFavorites(book.id)" class="btn btn-primary">Add to favorites</button></td>
                     }
                 }
-
-                @if (role == "ADMIN") {
+                @if (integration.user?.roles == "ADMIN") {
                     <td><button (click)="editBook(book.id)" class="btn btn-primary">Edit</button></td>
                     <td><button (click)="deleteBook(book.id)" class="btn btn-danger">Delete</button></td>
                 }
@@ -36,6 +35,7 @@
             }
         </tbody>
     </table>
-
-    <button (click)="addBook()" class="btn btn-success">Add</button>
+    @if (integration.user?.roles == "ADMIN") {
+        <button (click)="addBook()" class="btn btn-success">Add</button>
+    }
 </div>

@@ -61,10 +61,13 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/books/").permitAll();
                     auth.requestMatchers("/books/delete/**").hasRole("ADMIN");
+                    auth.requestMatchers("/books/update").hasRole("ADMIN");
+                    auth.requestMatchers("/books/create").hasRole("ADMIN");
+                    auth.requestMatchers("/books/favorites/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/books/**").permitAll();
                     auth.anyRequest().authenticated();
                 });
 

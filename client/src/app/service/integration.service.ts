@@ -1,42 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { LoginRequest } from '../model/login-request';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginResponse } from '../model/login-response';
 import { RegisterRequest } from '../model/register-request';
 import { RegisterResponse } from '../model/register-response';
-import { jwtDecode } from 'jwt-decode';
 import { LocalStorageService } from './local-storage.service';
+import { jwtDecode } from 'jwt-decode';
 
 const API_URL = "http://localhost:8080";
 
 @Injectable({
   providedIn: 'root'
 })
-export class IntegrationService {
+export class IntegrationService implements OnInit {
 
-  userIsLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   storage = inject(LocalStorageService);
+  user: any | undefined;
 
   constructor(
     private http: HttpClient
-  ) { 
-    if (this.storage.get('auth-key')) {
-      this.userIsLoggedIn.next(true);
+  ) {
+    try {
+      const token = this.storage.get('auth-key');
+      const decodedToken: any = jwtDecode(token!);
+
+      this.user = decodedToken;
+    }
+    catch (error: any) {
+      console.log("Error decoding JWT: ", error);
     }
   }
 
   ngOnInit(): void {
-    // try {
-    //   const token = this.storage.get('auth-key');
-    //   const decodedToken: any = jwtDecode(token!);
     
-    //   this.userIsLoggedIn.next(decodedToken != null);
-    // }
-    // catch (err) {
-    //   console.log(err);
-    //   this.userIsLoggedIn.next(false);
-    // }
   }
 
   login(request: LoginRequest): Observable<LoginResponse> {
@@ -45,14 +42,6 @@ export class IntegrationService {
 
   register(request: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(API_URL + "/auth/register", request);
-  }
-
-  userBooks(): Observable<any> { // ??? not used
-    return this.http.get<any>(API_URL + "/user/books/");
-  }
-
-  userRole(): Observable<any> { // ??? not used
-    return this.http.get<any>(API_URL + "/user/")
   }
 
 }

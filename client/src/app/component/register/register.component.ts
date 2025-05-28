@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IntegrationService } from '../../service/integration.service';
-import { LocalStorageService } from '../../service/local-storage.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../../model/register-request';
 
@@ -12,6 +11,7 @@ import { RegisterRequest } from '../../model/register-request';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  
   constructor(
     private router: Router,
     private integration: IntegrationService

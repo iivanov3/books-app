@@ -17,13 +17,12 @@
                 <td>{{book.name}}</td>
                 <td>{{book.author}}</td>
                 <td>{{book.datePublished | date}}</td>
-                
                 <td><button (click)="removeFromFavorites(book.id)" class="btn btn-danger">Remove from favorites</button></td>
-                <td><button (click)="editBook(book.id)" class="btn btn-primary">Edit</button></td>
+                @if (integration.user?.roles == "ADMIN") {
+                    <td><button (click)="editBook(book.id)" class="btn btn-primary">Edit</button></td>
+                }
             </tr>
             }
         </tbody>
     </table>
-
-    <button (click)="addBook()" class="btn btn-success">Add</button>
 </div>

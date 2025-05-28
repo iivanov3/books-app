@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../service/local-storage.service';
 import { Router } from '@angular/router';
 import { IntegrationService } from '../../service/integration.service';
@@ -19,9 +19,8 @@ export class LogoutComponent implements OnInit {
   
   ngOnInit(): void {
     this.storage.remove('auth-key');
-    this.storage.remove('username');
-    this.integration.userIsLoggedIn.next(false);
-
+    
+    this.integration.user = null;
     this.router.navigateByUrl('logout');
   }
 }

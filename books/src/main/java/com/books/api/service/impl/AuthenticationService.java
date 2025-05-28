@@ -39,7 +39,6 @@ public class AuthenticationService {
 
     public RegisterResponseDTO registerUser(String username, String password) {
         if (userRepository.existsByUsername(username)) {
-            //throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already taken.");
             return new RegisterResponseDTO("Username already exists.");
         }
 

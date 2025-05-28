@@ -4,8 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { IntegrationService } from '../../service/integration.service';
 import { LoginRequest } from '../../model/login-request';
 import { LocalStorageService } from '../../service/local-storage.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginResponse } from '../../model/login-response';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -30,9 +30,7 @@ export class LoginComponent {
   message: string | undefined;
 
   login() {
-
     this.storage.remove('auth-key');
-    this.storage.remove('username');
 
     const formValue = this.userForm.value;
 
@@ -42,7 +40,8 @@ export class LoginComponent {
     this.integration.login(this.request).subscribe({
       next: (response: LoginResponse) => {
         this.storage.set('auth-key', response.token);
-        this.integration.userIsLoggedIn.next(response.token != "");
+        
+        this.integration.user = jwtDecode(response.token!);
         this.router.navigateByUrl('books');
       },
       error: (err) => {

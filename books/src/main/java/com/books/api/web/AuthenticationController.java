@@ -30,7 +30,6 @@ public class AuthenticationController {
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
-        //return authenticationService.registerUser(body.getUsername(), body.getPassword());
     }
 
     @PostMapping("/login")

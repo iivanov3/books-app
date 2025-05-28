@@ -4,14 +4,14 @@
 
         <ul class="navbar-nav">
             <li><a routerLink="/books" class="nav-link">Books</a></li>
-            @if (integration.userIsLoggedIn.value) {
-            <li><a routerLink="/favorites" class="nav-link">Favorites</a></li>
+            @if (integration.user) {
+                <li><a routerLink="/favorites" class="nav-link">Favorites</a></li>
             }
         </ul>
 
         <ul class="navbar-nav navbar-collapse justify-content-end">
-            @if (integration.userIsLoggedIn.value) {
-            <li><a routerLink="/logout" class="nav-link">Logout</a></li>
+            @if (integration.user) {
+                <li><a routerLink="/logout" class="nav-link">Logout</a></li>
             }
             @else {
                 <li><a routerLink="/login" class="nav-link">Login</a></li>
